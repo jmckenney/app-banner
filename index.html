@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPA iOS App Banner Demo</title>
+  <meta name="apple-itunes-app" app-id="917397071">
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin-right: 10px;
+  text-decoration: none;
+  color: blue;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+#content {
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+  </style>
+  <script>
+    function addIosAppDownloadBanner(appId, appArgument, affiliateData) {
+  // Check if the meta tag already exists
+  let metaTag = document.querySelector('meta[name="apple-itunes-app"]');
+  
+  // If the meta tag does not exist, create it
+  if (!metaTag) {
+    metaTag = document.createElement('meta');
+    metaTag.name = 'apple-itunes-app';
+    document.head.appendChild(metaTag);
+  }
+  
+  // Set the content attribute with the appropriate values
+  metaTag.content = `app-id=${appId}, app-argument=${appArgument}, affiliate-data=${affiliateData}`;
+}
+
+function handleUrlChange() {
+  const appId = '917397071'; // Replace with your actual app ID
+  const currentUrl = window.location.href;
+  const affiliateData = 'AFFILIATE_DATA'; // Replace with your actual affiliate data
+  
+  addIosAppDownloadBanner(appId, currentUrl, affiliateData);
+}
+
+function navigate(page) {
+  // Simulate SPA navigation by changing the content
+  const content = document.getElementById('content');
+  if (page === 'home') {
+    content.innerHTML = '<h1>Home</h1><p>Welcome to the home page!</p>';
+  } else if (page === 'about') {
+    content.innerHTML = '<h1>About</h1><p>Learn more about us on this page.</p>';
+  } else if (page === 'contact') {
+    content.innerHTML = '<h1>Contact</h1><p>Get in touch with us here.</p>';
+  }
+  
+  // Update the URL without reloading the page
+  window.history.pushState({}, '', `#${page}`);
+  
+  // Handle the URL change
+  handleUrlChange();
+}
+
+// Initial call
+handleUrlChange();
+
+// Handle back/forward navigation
+window.addEventListener('popstate', handleUrlChange);
+
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="#home" onclick="navigate('home')">Home</a>
+    <a href="#about" onclick="navigate('about')">About</a>
+    <a href="#contact" onclick="navigate('contact')">Contact</a>
+  </nav>
+  <div id="content">
+    <h1>Home</h1>
+    <p>Welcome to the home page!</p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
